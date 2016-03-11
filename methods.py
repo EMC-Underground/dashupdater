@@ -96,8 +96,7 @@ def trimArrayCounts(counts):
       counts['Other'] += array[1]
   return counts
 
-def get_expired_counts (expired_data):
-  data = expired_data
+def countArrays (data):
   counts= {}
     for each array in data:
       if array['INSTALL_BASE_STATUS'] == 'Install':
@@ -131,11 +130,11 @@ def rotating():
   array_data = getArrayData(gdun)
   expiring_data = get_expiring_data(array_data)
   num_expiring = expiring_data.length
-  expiring_counts = trimArrayCounts(get_expired_counts(expiring_data))
+  expiring_counts = trimArrayCounts(countArrays(expiring_data))
+  sr_data = getSRData(gdun)
+  array_counts = trimArrayCounts(countArrays(array_data))
 
   # TODO: Translate remainder of file into python
-  sr_data = Sr.getSRData(gdun)
-  array_counts = Arrays.trimArrayCounts(Arrays.getArrayCounts(array_data))
   sev1_hash = Sr.sev1_data(sr_data)
   array_hash = Hash.new({ value: 0 })
   array_counts.each do |array|
