@@ -123,6 +123,16 @@ def sev1_data(sr_data):
       count += 1
   return sev1_data
 
+def countSRBySev(sr_data):
+  data = sr_data["rows"]
+  counts = {}
+  for sr in data:
+    if counts[sr['Sev']]:
+      counts[sr['Sev']] +=1
+    else:
+      counts[sr['Sev']] = 1
+  return counts
+
 # Primary job function
 def rotating():
   # Get a customer to display
@@ -146,17 +156,15 @@ def rotating():
   sev1_hash = sev1_data(sr_data)
 
   # TODO: Translate remainder of file into python
-  array_hash = Hash.new({ value: 0 })
-  array_counts.each do |array|
+  array_hash = {}
+  for array in array_counts
     array_hash[array[0]] = { label: array[0], value: array[1].to_s, link: installs_url }
 
-  expiring_hash = Hash.new({ value: 0 })
-  expiring_counts.each do |array|
+  expiring_hash = {}
+  for array in expiring_counts
     expiring_hash[array[0]] = { label: array[0], value: array[1].to_s }
 
-  test_hash = Hash.new()
-  puts sev1_hash
-  sr_counts = Sr.countSRBySev(sr_data)
+  sr_counts = countSRBySev(sr_data)
   sr_array = []
   sr_array.push ['SR Severity', 'Quantity']
   sr_counts.each do |array|
@@ -170,14 +178,3 @@ def rotating():
   send_event('sev1_data', { items: sev1_hash.values, link: sev1_url })
   send_event('num_expiring', value: num_expiring)
   send_event('expiring_counts', { items: expiring_hash.values })
-
-def countSRBySev(sr_data):
-  data = sr_data
-  data = data["rows"]
-  counts = {}
-  data.each do |sr|
-  if counts[sr['Sev']]
-    counts[sr['Sev']] +=1
-  else
-    counts[sr['Sev']] = 1
-  return counts
