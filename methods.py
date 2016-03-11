@@ -25,7 +25,7 @@ gdun_index = multiprocessing.Value('i', 0)
 def error_listener(event):
   if event.exception:
     print("The job failed...{0}".format(event.exception))
-  else
+  else:
     print("The job worked!")
 
 # Function to set gdun index variable
@@ -54,7 +54,7 @@ def get_expiring_data(array_data):
     if array['CONTRACT_SUBLINE_STATUS'] != "NA":
       expiration_date = time.mktime(datetime.datetime.strptime(myDate, "%Y-%m-%d %H:%M:%S").timetuple())
       days_til_expire = (expiration_date - today)/(60*60*24)
-      if array['INSTALL_BASE_STATUS'] == 'Install' && days_til_expire < 120
+      if array['INSTALL_BASE_STATUS'] == 'Install' and days_til_expire < 120:
         expiring.append(array)
   return expiring
 
