@@ -106,6 +106,17 @@ def trimArrayCounts(counts):
       counts['Other'] += array[1]
   return counts
 
+def get_expired_counts (expired_data):
+  data = expired_data
+  counts= {}
+    for each array in data:
+      if array['INSTALL_BASE_STATUS'] == 'Install':
+        if counts[array['PRODUCT_FAMILY']]:
+          counts[array['PRODUCT_FAMILY']] +=1
+        else:
+          counts[array['PRODUCT_FAMILY']] = 1
+  return counts
+
 # Primary job function
 def rotating():
   # Get a customer to display
@@ -123,9 +134,9 @@ def rotating():
   array_data = getArrayData(gdun)
   expiring_data = get_expiring_data(array_data)
   num_expiring = expiring_data.length
+  expiring_counts = trimArrayCounts(get_expired_counts(expiring_data))
 
-  # TODO: Translate remainder of function into python
-  expiring_counts = Arrays.trimArrayCounts(Arrays.get_expired_counts(expiring_data))
+  # TODO: Translate remainder of file into python
   sr_data = Sr.getSRData(gdun)
   array_counts = Arrays.trimArrayCounts(Arrays.getArrayCounts(array_data))
   sev1_hash = Sr.sev1_data(sr_data)
