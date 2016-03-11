@@ -113,6 +113,16 @@ def getSRData(gdun):
     sr_data = r.json()
   return sr_data
 
+def sev1_data(sr_data):
+  data = sr_data["rows"]
+  sev1_data['Headers'] = { col1: 'SR Num. ', col2: 'Age', col3: 'Family   ', col4: 'Site Name' }
+  count = 1
+  for sr in data:
+    if sr['Sev'] == 'S1':
+      sev1_data[count] = { col1: sr['SR_NUMBER'] , col2: sr['Age'].to_i , col3: sr['Family'] , col4: sr['CS Customer Name'] }
+      count += 1
+  return sev1_data
+
 # Primary job function
 def rotating():
   # Get a customer to display
@@ -133,9 +143,9 @@ def rotating():
   expiring_counts = trimArrayCounts(countArrays(expiring_data))
   sr_data = getSRData(gdun)
   array_counts = trimArrayCounts(countArrays(array_data))
+  sev1_hash = sev1_data(sr_data)
 
   # TODO: Translate remainder of file into python
-  sev1_hash = Sr.sev1_data(sr_data)
   array_hash = Hash.new({ value: 0 })
   array_counts.each do |array|
     array_hash[array[0]] = { label: array[0], value: array[1].to_s, link: installs_url }
@@ -171,15 +181,3 @@ def countSRBySev(sr_data):
   else
     counts[sr['Sev']] = 1
   return counts
-
-def Sr.sev1_data(sr_data):
-  data = sr_data
-  data = data["rows"]
-  sev1_data = Hash.new()
-  sev1_data['Headers'] = { col1: 'SR Num. ', col2: 'Age', col3: 'Family   ', col4: 'Site Name' }
-  count = 1
-  data.each do |sr|
-    if sr['Sev'] == 'S1'
-      sev1_data[count] = { col1: sr['SR_NUMBER'] , col2: sr['Age'].to_i , col3: sr['Family'] , col4: sr['CS Customer Name'] }
-      count+=1
-  return sev1_data
