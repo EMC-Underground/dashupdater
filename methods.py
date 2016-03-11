@@ -44,7 +44,7 @@ def getArrayData(gdun):
     array_data = r.json()
   return array_data
 
-def Arrays.get_expiring_data(array_data)
+def get_expiring_data(array_data):
   data = array_data["rows"]
   expiring = []
   today = time.mktime(time.localtime(time.time()))
@@ -55,6 +55,56 @@ def Arrays.get_expiring_data(array_data)
       if array['INSTALL_BASE_STATUS'] == 'Install' && days_til_expire < 120
         expiring.append(array)
   return expiring
+
+def trimArrayCounts(counts):
+  array_counts = counts
+  counts = {
+  "VNX": 0,
+  "Symmetrix": 0,
+  "XtremIO": 0,
+  "Clariion": 0,
+  "Isilon": 0,
+  "Connectrix": 0,
+  "Recoverpoint": 0,
+  "Data Domain": 0,
+  "Avamar": 0,
+  "VPLEX": 0,
+  "ScaleIO": 0,
+  "ECS/ViPR": 0,
+  "Other": 0
+  }
+  for array in array_counts:
+    if array[0].include? "VNX":
+      counts['VNX'] += array[1]
+    elif array[0].include? "SYMMETRIX":
+      counts['Symmetrix'] += array[1]
+    elif array[0].include? "DATADOMAIN":
+      counts['Data Domain'] += array[1]
+    elif array[0].include? "ISILON":
+      counts['Isilon'] += array[1]
+    elif array[0].include? "XTREMIO":
+      counts['XtremIO'] += array[1]
+    elif array[0].include? "CONNECTRIX":
+      counts['Connectrix'] += array[1]
+    elif array[0].include? "RECOVERPOINT":
+      counts['Recoverpoint'] += array[1]
+    elif array[0].include? "AVAMAR":
+      counts['Avamar'] += array[1]
+    elif array[0].include? "VPLEX":
+      counts['VPLEX'] += array[1]
+    elif array[0].include? "CLARIION":
+      counts['Clariion'] += array[1]
+    elif array[0].include? "CELERRA":
+      counts['Clariion'] += array[1]
+    elif array[0].include? "VIPR":
+      counts['ECS/ViPR'] += array[1]
+    elif array[0].include? "SCALEIO":
+      counts['ScaleIO'] += array[1]
+    elif array[0].include? "ECS":
+      counts['ECS/ViPR'] += array[1]
+    else:
+      counts['Other'] += array[1]
+  return counts
 
 # Primary job function
 def rotating():
@@ -72,8 +122,9 @@ def rotating():
 
   array_data = getArrayData(gdun)
   expiring_data = get_expiring_data(array_data)
-  puts expiring_data
   num_expiring = expiring_data.length
+
+  # TODO: Translate remainder of function into python
   expiring_counts = Arrays.trimArrayCounts(Arrays.get_expired_counts(expiring_data))
   sr_data = Sr.getSRData(gdun)
   array_counts = Arrays.trimArrayCounts(Arrays.getArrayCounts(array_data))
