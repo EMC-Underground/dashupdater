@@ -154,8 +154,6 @@ def rotating():
   sr_data = getSRData(gdun)
   array_counts = trimArrayCounts(countArrays(array_data))
   sev1_hash = sev1_data(sr_data)
-
-  # TODO: Translate remainder of file into python
   array_hash = {}
   for array in array_counts
     array_hash[array[0]] = { label: array[0], value: array[1].to_s, link: installs_url }
@@ -166,10 +164,12 @@ def rotating():
 
   sr_counts = countSRBySev(sr_data)
   sr_array = []
-  sr_array.push ['SR Severity', 'Quantity']
-  sr_counts.each do |array|
-    sr_array.push [array[0],array[1]]
+  sr_array.append(['SR Severity', 'Quantity'])
+  for array in sr_counts:
+    sr_array.append([array[0],array[1]])
 
+
+  # TODO: Translate remainder of file into python
   send_event('mychart', slices: sr_array)
   send_event('total_srs', { value: sr_data["rows"].length(), link: sr_url})
   send_event('array_counts',   { items: array_hash.values })
