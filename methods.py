@@ -12,8 +12,10 @@ with open('config.json') as config_file:
 username = config['username']
 password = config['password']
 domain = config['domain']
-url1 = config['iburl']
-url2 = config['iburl2']
+iburl1 = config['iburl']
+iburl2 = config['iburl2']
+srurl = config['srurl']
+srurl2 = config['srurl2']
 
 gdun_index = multiprocessing.Value('i', 0)
 
@@ -38,7 +40,7 @@ def rotating_gdun(value):
   return gduns[value]
 
 def getArrayData(gdun):
-  url = url1+str(gdun)+url2
+  url = iburl1+str(gdun)+iburl2
   r = requests.get(url,auth=HttpNtlmAuth('{0}\\{1}'.format(domain,username),password))
   if r.status_code == 200:
     array_data = r.json()
@@ -58,20 +60,8 @@ def get_expiring_data(array_data):
 
 def trimArrayCounts(counts):
   array_counts = counts
-  counts = {
-  "VNX": 0,
-  "Symmetrix": 0,
-  "XtremIO": 0,
-  "Clariion": 0,
-  "Isilon": 0,
-  "Connectrix": 0,
-  "Recoverpoint": 0,
-  "Data Domain": 0,
-  "Avamar": 0,
-  "VPLEX": 0,
-  "ScaleIO": 0,
-  "ECS/ViPR": 0,
-  "Other": 0
+  counts = {"VNX": 0, "Symmetrix": 0, "XtremIO": 0, "Clariion": 0, "Isilon": 0, "Connectrix": 0, "Recoverpoint": 0,
+            "Data Domain": 0, "Avamar": 0, "VPLEX": 0, "ScaleIO": 0, "ECS/ViPR": 0, "Other": 0
   }
   for array in array_counts:
     if array[0].include? "VNX":
@@ -116,6 +106,13 @@ def get_expired_counts (expired_data):
         else:
           counts[array['PRODUCT_FAMILY']] = 1
   return counts
+
+def getSRData(gdun):
+  url = srurl + str(gdun) + srurl2
+  r = requests.get(url,auth=HttpNtlmAuth('{0}\\{1}'.format(domain,username),password))
+  if r.status_code == 200:
+    sr_data = r.json()
+  return sr_data
 
 # Primary job function
 def rotating():
@@ -164,15 +161,6 @@ def rotating():
   send_event('sev1_data', { items: sev1_hash.values, link: sev1_url })
   send_event('num_expiring', value: num_expiring)
   send_event('expiring_counts', { items: expiring_hash.values })
-
-def getSRData(gdun):
-  url = @url1+gdun+@url2
-  request = HTTPI::Request.new
-  request.url = url
-  request.auth.ntlm(@username, @pass, @domain)
-  response = HTTPI.get(request)
-  sr_data = JSON.parse(response.body)
-  return sr_data
 
 def countSRBySev(sr_data):
   data = sr_data
