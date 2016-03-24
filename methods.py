@@ -98,7 +98,7 @@ def trimArrayCounts(counts):
 
 def countArrays (data):
   counts= {}
-  for each array in data:
+  for array in data:
     if array['INSTALL_BASE_STATUS'] == 'Install':
       if counts[array['PRODUCT_FAMILY']]:
         counts[array['PRODUCT_FAMILY']] +=1
