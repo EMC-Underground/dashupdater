@@ -159,7 +159,7 @@ def rotating():
     array_hash[array[0]] = { label: array[0], value: array[1].to_s, link: installs_url }
 
   expiring_hash = {}
-  for array in expiring_counts
+  for array in expiring_counts:
     expiring_hash[array[0]] = { label: array[0], value: array[1].to_s }
 
   sr_counts = countSRBySev(sr_data)
@@ -171,7 +171,7 @@ def rotating():
   r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','slices': sr_array})
   r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': sr_data["rows"].length(), 'link': sr_url})
   r = requests.post('{0}:3030/widgets/api_array_counts'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': array_hash})
-  r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': sr_counts['S1'] || 0, 'link': sev1_url})
+  r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': sr_counts['S1'] ||= 0, 'link': sev1_url})
   r = requests.post('{0}:3030/widgets/api_picture'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','image': cust_logo})
   r = requests.post('{0}:3030/widgets/api_sev1_data'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': sev1_hash, 'link': sev1_url})
   r = requests.post('{0}:3030/widgets/api_num_expiring'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': num_expiring})
