@@ -155,7 +155,7 @@ def rotating():
   array_counts = trimArrayCounts(countArrays(array_data))
   sev1_hash = sev1_data(sr_data)
   array_hash = {}
-  for array in array_counts
+  for array in array_counts:
     array_hash[array[0]] = { label: array[0], value: array[1].to_s, link: installs_url }
 
   expiring_hash = {}
