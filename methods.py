@@ -64,33 +64,33 @@ def trimArrayCounts(counts):
             "Data Domain": 0, "Avamar": 0, "VPLEX": 0, "ScaleIO": 0, "ECS/ViPR": 0, "Other": 0
   }
   for array in array_counts:
-    if array[0].include? "VNX":
+    if "VNX" in array[0]:
       counts['VNX'] += array[1]
-    elif array[0].include? "SYMMETRIX":
+    elif "SYMMETRIX" in array[0]:
       counts['Symmetrix'] += array[1]
-    elif array[0].include? "DATADOMAIN":
+    elif "DATADOMAIN" in array[0]:
       counts['Data Domain'] += array[1]
-    elif array[0].include? "ISILON":
+    elif "ISILON" in array[0]:
       counts['Isilon'] += array[1]
-    elif array[0].include? "XTREMIO":
+    elif "XTREMIO" in array[0]:
       counts['XtremIO'] += array[1]
-    elif array[0].include? "CONNECTRIX":
+    elif "CONNECTRIX" in array[0]:
       counts['Connectrix'] += array[1]
-    elif array[0].include? "RECOVERPOINT":
+    elif "RECOVERPOINT" in array[0]:
       counts['Recoverpoint'] += array[1]
-    elif array[0].include? "AVAMAR":
+    elif "AVAMAR" in array[0]:
       counts['Avamar'] += array[1]
-    elif array[0].include? "VPLEX":
+    elif "VPLEX" in array[0]:
       counts['VPLEX'] += array[1]
-    elif array[0].include? "CLARIION":
+    elif "CLARIION" in array[0]:
       counts['Clariion'] += array[1]
-    elif array[0].include? "CELERRA":
+    elif "CELERRA" in array[0]:
       counts['Clariion'] += array[1]
-    elif array[0].include? "VIPR":
+    elif "VIPR" in array[0]:
       counts['ECS/ViPR'] += array[1]
-    elif array[0].include? "SCALEIO":
+    elif "SCALEIO" in array[0]:
       counts['ScaleIO'] += array[1]
-    elif array[0].include? "ECS":
+    elif "ECS" in array[0]:
       counts['ECS/ViPR'] += array[1]
     else:
       counts['Other'] += array[1]
