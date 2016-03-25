@@ -102,7 +102,7 @@ def countArrays (data):
   counts= {}
   for array in data:
     if array['INSTALL_BASE_STATUS'] == 'Install':
-      if counts[array['PRODUCT_FAMILY']]:
+      if hasattr(counts, array['PRODUCT_FAMILY']):
         counts[array['PRODUCT_FAMILY']] +=1
       else:
         counts[array['PRODUCT_FAMILY']] = 1
