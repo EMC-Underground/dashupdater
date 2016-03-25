@@ -30,7 +30,7 @@ def dashboards():
 if __name__ == '__main__':
   scheduler.add_job(methods.rotating, 'interval', seconds=20)
   scheduler.add_listener(methods.error_listener, events.EVENT_JOB_EXECUTED | events.EVENT_JOB_ERROR)
-  scheduler.start()
+  # scheduler.start()
 
   try:
     app.run(host='0.0.0.0', port=port)
