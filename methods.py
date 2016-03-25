@@ -129,10 +129,10 @@ def countSRBySev(sr_data):
   data = sr_data["rows"]
   counts = {}
   for sr in data:
-    if hasattr(counts,sr['Sev']):
+    try:
       counts[sr['Sev']] +=1
-    else:
-      counts[sr['Sev']] = 1
+    except KeyError:
+      counts[sr['Sev']] = 1      
   return counts
 
 # Primary job function
