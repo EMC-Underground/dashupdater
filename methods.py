@@ -115,7 +115,9 @@ def countArrays (data):
       elif "CLARIION" in product_name:
         product_name = "CLARIION"
       elif "CELERA" in product_name:
-        product_name = "CELERA"
+        product_name = "CELERRA"
+      elif "AVAMAR" in product_name:
+        product_name = "AVAMAR"
       # Add to the counts
       try:
         counts[product_name] +=1
