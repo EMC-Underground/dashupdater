@@ -52,10 +52,11 @@ def set_next_index(packet):
   for gdun in gduns:
     if gdun['num'] == packet['gdun']:
       gdun_index.value = count
+      found = True
       break
     else:
       count += 1
-  return {"Status":"OK","Found":found}
+  return json.dumps({"Status":"OK","Found":found})
 
 # Get single customer gdun content
 def rotating_gdun(value):

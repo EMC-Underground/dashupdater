@@ -11,7 +11,7 @@ scheduler = BackgroundScheduler()
 port = int(os.getenv('VCAP_APP_PORT', 8080))
 
 # Uncomment if you need to debug the site
-app.debug = True
+# app.debug = True
 
 # Routes
 @app.route('/')
@@ -30,7 +30,7 @@ def dashboards():
 if __name__ == '__main__':
   scheduler.add_job(methods.rotating, 'interval', seconds=20)
   scheduler.add_listener(methods.error_listener, events.EVENT_JOB_EXECUTED | events.EVENT_JOB_ERROR)
-  # scheduler.start()
+  scheduler.start()
 
   try:
     app.run(host='0.0.0.0', port=port)
