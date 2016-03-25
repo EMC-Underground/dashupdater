@@ -120,11 +120,9 @@ def sev1_data(sr_data):
   data = sr_data["rows"]
   sev1_data = []
   sev1_data.append({ "col1":"SR Num. ", "col2": "Age", "col3": "Family   ", "col4": "Site Name" })
-  count = 1
   for sr in data:
     if sr['Sev'] == 'S1':
-      sev1_data[count] = { "col1": sr['SR_NUMBER'] , "col2": int(round(float(sr['Age']))), "col3": sr['Family'] , "col4": sr['CS Customer Name'] }
-      count += 1
+      sev1_data.append({ "col1": sr['SR_NUMBER'] , "col2": int(round(float(sr['Age']))), "col3": sr['Family'] , "col4": sr['CS Customer Name'] })
   return sev1_data
 
 def countSRBySev(sr_data):
