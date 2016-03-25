@@ -118,8 +118,8 @@ def getSRData(gdun):
 
 def sev1_data(sr_data):
   data = sr_data["rows"]
-  sev1_data = {}
-  sev1_data['Headers'] = { "col1":"SR Num. ", "col2": "Age", "col3": "Family   ", "col4": "Site Name" }
+  sev1_data = []
+  sev1_data.append({ "col1":"SR Num. ", "col2": "Age", "col3": "Family   ", "col4": "Site Name" })
   count = 1
   for sr in data:
     if sr['Sev'] == 'S1':
