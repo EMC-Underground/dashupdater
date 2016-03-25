@@ -20,6 +20,7 @@ srurl2 = config['srurl2']
 auth_token = config['auth_token']
 
 gdun_index = multiprocessing.Value('i', 0)
+prev_gdun_index = multiprocessing.Value('i', -1)
 
 ### Methods ###
 
@@ -32,8 +33,9 @@ def error_listener(event):
     print("The job worked!")
 
 # Function to set gdun index variable
-def set_next_index(gdun):
-  gdun_index.value = gdun
+def set_next_index(packet):
+  prev_gdun_index.value = gdun_index.value
+  gdun_index.value = packet['gdun']
 
 # Get single customer gdun content
 def rotating_gdun(value):
@@ -205,7 +207,14 @@ def rotating():
   gdun = gdun_data['num']
   cust_name = gdun_data['name']
   cust_logo = gdun_data['image']
-  gdun_index.value = gdun_data['next-index']
+  #
+  # Use the previous index if there is one
+  #
+  if prev_gdun_index.value >= 0:
+    gdun_index.value = prev_gdun_index.value
+    prev_gdun_index.value = -1
+  else:
+    gdun_index.value = gdun_data['next-index']
 
   installs_url = config['dash_url'] + ":1337/csv/installreport/" + gdun
   sev1_url = config['dash_url'] + ":1337/csv/sev1report/" + gdun
