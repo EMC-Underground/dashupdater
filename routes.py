@@ -1,6 +1,7 @@
 # Imports
 from flask import Flask, request, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler import events
 import os
 import methods
 
@@ -25,7 +26,7 @@ def dashboards():
 # Start App
 if __name__ == '__main__':
   scheduler.add_job(methods.rotating, 'interval', seconds=20)
-  scheduler.add_listener(methods.error_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+  scheduler.add_listener(methods.error_listener, events.EVENT_JOB_EXECUTED | events.EVENT_JOB_ERROR)
   scheduler.start()
 
   try:
