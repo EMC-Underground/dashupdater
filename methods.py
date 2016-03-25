@@ -138,6 +138,14 @@ def countArrays (data):
         product_name = "XTREMIO"
       elif "VPLEX" in product_name:
         product_name = "VPLEX"
+      elif "VXE2" in product_name:
+        product_name = "VNX2/VNXe2"
+      elif "VNX2" in product_name:
+        product_name = "VNX2/VNXe2"
+      elif "VNXE" in product_name:
+        product_name = "VNX/VNXe"
+      elif "VNX" in product_name:
+        product_name = "VNX/VNXe"
       elif "BUSTECH" in product_name:
         product_name = "MAINFRAME-TECH"
       elif "UNIFIED-DL" in product_name:
