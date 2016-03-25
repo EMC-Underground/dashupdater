@@ -46,10 +46,10 @@ def getArrayData(gdun):
   r = requests.get(url,auth=HttpNtlmAuth('{0}\\{1}'.format(domain,username),password))
   if r.status_code == 200:
     array_data = r.json()
-  return array_data
+  return array_data["rows"]
 
 def get_expiring_data(array_data):
-  data = array_data["rows"]
+  data = array_data
   expiring = []
   today = time.mktime(time.localtime(time.time()))
   for array in data:
