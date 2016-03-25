@@ -102,11 +102,17 @@ def trimArrayCounts(counts):
 
 def countArrays (data):
   counts= {}
+  #
   # cycle through the array list
+  #
   for array in data:
+    #
     # verify it's installed
+    #
     if array['INSTALL_BASE_STATUS'] == 'Install':
+      #
       # Group together old product names
+      #
       product_name = array['PRODUCT_FAMILY']
       if "SYMMETRIX" in product_name:
         product_name = "SYMMETRIX"
@@ -122,11 +128,18 @@ def countArrays (data):
         product_name = "RECOVERPOINT"
       elif "DATADOMAIN" in product_name:
         product_name = "DATADOMAIN"
-
+      elif "COMPUTING-NA" in product_name:
+        product_name = "GREENPLUM"
+      #
       # Clean out non-array components
+      #
+      elif "FLASH-NA" in product_name:
+        continue
       if array['CONTRACT_SUBLINE_STATUS'] == None:
         continue
+      #
       # Add to the counts
+      #
       try:
         counts[product_name] +=1
       except KeyError:
