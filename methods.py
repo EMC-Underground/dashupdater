@@ -135,6 +135,8 @@ def countArrays (data):
       #
       elif "FLASH-NA" in product_name:
         continue
+      elif "EDM-NA" in product_name:
+        continue
       if array['CONTRACT_SUBLINE_STATUS'] == None:
         continue
       #
