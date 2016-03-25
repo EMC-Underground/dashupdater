@@ -142,9 +142,9 @@ def rotating():
   cust_logo = gdun_data['image']
   gdun_index.value = gdun_data['next-index']
 
-  installs_url = config['dash_url'] + ":1337/csv/installreport/" + gdun.to_s
-  sev1_url = config['dash_url'] + ":1337/csv/sev1report/" + gdun.to_s
-  sr_url = config['dash_url'] + ":1337/csv/srreport/" + gdun.to_s
+  installs_url = config['dash_url'] + ":1337/csv/installreport/" + gdun
+  sev1_url = config['dash_url'] + ":1337/csv/sev1report/" + gdun
+  sr_url = config['dash_url'] + ":1337/csv/srreport/" + gdun
 
 
   array_data = getArrayData(gdun)
