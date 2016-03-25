@@ -130,7 +130,7 @@ def countSRBySev(sr_data):
   data = sr_data["rows"]
   counts = {}
   for sr in data:
-    if counts[sr['Sev']]:
+    if hasattr(counts,sr['Sev']):
       counts[sr['Sev']] +=1
     else:
       counts[sr['Sev']] = 1
@@ -159,20 +159,20 @@ def rotating():
   sev1_hash = sev1_data(sr_data)
   array_hash = {}
   for array in array_counts:
-    array_hash[array[0]] = { "label": array[0], "value": array[1].to_s, "link": installs_url }
+    array_hash[array[0]] = { "label": array[0], "value": array[1], "link": installs_url }
 
   expiring_hash = {}
   for array in expiring_counts:
-    expiring_hash[array[0]] = { label: array[0], value: array[1].to_s }
+    expiring_hash[array[0]] = { "label": array[0], "value": array[1] }
 
   sr_counts = countSRBySev(sr_data)
   sr_array = []
-  sr_array.append(['SR Severity', 'Quantity'])
+  sr_array.append({"SR Severity":"Quantity"})
   for array in sr_counts:
-    sr_array.append([array[0],array[1]])
+    sr_array.append({array[0]:array[1]})
 
   r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','slices': sr_array})
-  r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': sr_data["rows"].length(), 'link': sr_url})
+  r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': len(sr_data["rows"]), 'link': sr_url})
   r = requests.post('{0}:3030/widgets/api_array_counts'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': array_hash})
   if sr_counts['S1'] is None:
     sr_counts['S1'] = 0
