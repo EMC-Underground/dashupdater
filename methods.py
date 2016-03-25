@@ -103,9 +103,9 @@ def countArrays (data):
   counts= {}
   for array in data:
     if array['INSTALL_BASE_STATUS'] == 'Install':
-      if hasattr(counts, array['PRODUCT_FAMILY']):
+      try:
         counts[array['PRODUCT_FAMILY']] +=1
-      else:
+      except KeyError:
         counts[array['PRODUCT_FAMILY']] = 1
   return counts
 
