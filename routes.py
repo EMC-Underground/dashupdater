@@ -17,11 +17,14 @@ app.debug = True
 @app.route('/')
 def hello_world():
   return 'Hello World!'
-
+#
+# Packet attrs: gdun
+#
 @app.route('/dashboard/', methods=['PUT'])
 def dashboards():
   if request.method == 'PUT':
-    return set_next_index(gdun)
+    packet = request.get_json()
+    return methods.set_next_index(packet)
 
 # Start App
 if __name__ == '__main__':
