@@ -17,6 +17,7 @@ iburl1 = config['iburl']
 iburl2 = config['iburl2']
 srurl = config['srurl']
 srurl2 = config['srurl2']
+auth_token = config['auth_token']
 
 gdun_index = multiprocessing.Value('i', 0)
 
@@ -171,16 +172,16 @@ def rotating():
   for array in sr_counts:
     sr_array.append({array[0]:array[1]})
 
-  r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','slices': sr_array})
-  r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': len(sr_data["rows"]), 'link': sr_url})
-  r = requests.post('{0}:3030/widgets/api_array_counts'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': array_hash})
+  r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = {"auth_token": auth_token,"slices": sr_array})
+  r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = {"auth_token": auth_token,"value": len(sr_data['rows']), "link": sr_url})
+  r = requests.post('{0}:3030/widgets/api_array_counts'.format(config['dash_url']), data = {"auth_token": auth_token,"items": array_hash})
   if sr_counts['S1'] is None:
     sr_counts['S1'] = 0
-  r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': sr_counts['S1'], 'link': sev1_url})
-  r = requests.post('{0}:3030/widgets/api_picture'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','image': cust_logo})
-  r = requests.post('{0}:3030/widgets/api_sev1_data'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': sev1_hash, 'link': sev1_url})
-  r = requests.post('{0}:3030/widgets/api_num_expiring'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','value': num_expiring})
-  r = requests.post('{0}:3030/widgets/api_expiring_counts'.format(config['dash_url']), data = {'auth_token': 'YOUR_AUTH_TOKEN','items': expiring_hash})
+  r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = {"auth_token": auth_token,"value": sr_counts['S1'], "link": sev1_url})
+  r = requests.post('{0}:3030/widgets/api_picture'.format(config['dash_url']), data = {"auth_token": auth_token,"image": cust_logo})
+  r = requests.post('{0}:3030/widgets/api_sev1_data'.format(config['dash_url']), data = {"auth_token": auth_token,"items": sev1_hash, "link": sev1_url})
+  r = requests.post('{0}:3030/widgets/api_num_expiring'.format(config['dash_url']), data = {"auth_token": auth_token,"value": num_expiring})
+  r = requests.post('{0}:3030/widgets/api_expiring_counts'.format(config['dash_url']), data = {"auth_token": auth_token,"items": expiring_hash})
 
   # send_event('mychart', slices: sr_array)
   # send_event('total_srs', { value: sr_data["rows"].length(), link: sr_url})
