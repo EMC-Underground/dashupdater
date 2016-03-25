@@ -26,6 +26,7 @@ gdun_index = multiprocessing.Value('i', 0)
 def error_listener(event):
   if event.exception:
     print("The job failed...{0}".format(event.exception))
+    print("{0}".format(event.traceback))
   else:
     print("The job worked!")
 
