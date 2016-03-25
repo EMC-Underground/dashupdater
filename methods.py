@@ -173,9 +173,10 @@ def rotating():
   r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"slices": sr_array}))
   r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": len(sr_data['rows']), "link": sr_url}))
   r = requests.post('{0}:3030/widgets/api_array_counts'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"items": array_hash}))
-  if not hasattr(sr_counts, "S1"):
-    sr_counts['S1'] = 0
-  r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": sr_counts['S1'], "link": sev1_url}))
+  try:
+    r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": sr_counts['S1'], "link": sev1_url}))
+  except KeyError:
+    r = requests.post('{0}:3030/widgets/api_sev_1s'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": 0, "link": sev1_url}))
   r = requests.post('{0}:3030/widgets/api_picture'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"image": cust_logo}))
   r = requests.post('{0}:3030/widgets/api_sev1_data'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"items": sev1_hash, "link": sev1_url}))
   r = requests.post('{0}:3030/widgets/api_num_expiring'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": num_expiring}))
