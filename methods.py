@@ -130,9 +130,25 @@ def countArrays (data):
         product_name = "DATADOMAIN"
       elif "COMPUTING-NA" in product_name:
         product_name = "GREENPLUM"
+      elif "CONNECTRIX" in product_name:
+        product_name = "CONNECTRIX"
+      elif "ISILON" in product_name:
+        product_name = "ISILON"
+      elif "XTREMIO" in product_name:
+        product_name = "XTREMIO"
+      elif "VPLEX" in product_name:
+        product_name = "VPLEX"
+      elif "BUSTECH" in product_name:
+        product_name = "MAINFRAME-TECH"
+      elif "UNIFIED-DL" in product_name:
+        product_name = "MAINFRAME-TECH"
+      elif "DLM-DL" in product_name:
+        product_name = "MAINFRAME-TECH"
       #
       # Clean out non-array components
       #
+      elif "BULKSTORAGE" in product_name:
+        continue
       elif "FLASH-NA" in product_name:
         continue
       elif "EDM-NA" in product_name:
