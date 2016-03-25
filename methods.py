@@ -154,7 +154,7 @@ def rotating():
   num_expiring = len(expiring_data)
   expiring_counts = trimArrayCounts(countArrays(expiring_data))
   sr_data = getSRData(gdun)
-  array_counts = trimArrayCounts(countArrays(array_data))
+  array_counts = countArrays(array_data)
   sev1_hash = sev1_data(sr_data)
   array_hash = {}
   for array in array_counts:
