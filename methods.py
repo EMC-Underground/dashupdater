@@ -53,7 +53,7 @@ def get_expiring_data(array_data):
   expiring = []
   today = time.mktime(time.localtime(time.time()))
   for array in data:
-    if array['CONTRACT_SUBLINE_STATUS'] != "NA":
+    if array['CONTRACT_SUBLINE_STATUS'] != "NA" and array['CONTRACT_SUBLINE_END_DATE'] != None:
       expiration_date = time.mktime(datetime.datetime.strptime(array['CONTRACT_SUBLINE_END_DATE'], "%Y-%m-%d %H:%M:%S").timetuple())
       days_til_expire = (expiration_date - today)/(60*60*24)
       if array['INSTALL_BASE_STATUS'] == 'Install' and days_til_expire < 120:
