@@ -61,6 +61,7 @@ def get_expiring_data(array_data):
         expiring.append(array)
   return expiring
 
+# DEPRECIATED - Left in to see what was previously condensed; also is incorrect formatin
 def trimArrayCounts(counts):
   array_counts = counts
   counts = {"VNX": 0, "Symmetrix": 0, "XtremIO": 0, "Clariion": 0, "Isilon": 0, "Connectrix": 0, "Recoverpoint": 0,
@@ -101,12 +102,25 @@ def trimArrayCounts(counts):
 
 def countArrays (data):
   counts= {}
+  # cycle through the array list
   for array in data:
+    # verify it's installed
     if array['INSTALL_BASE_STATUS'] == 'Install':
+      # Group together old product names
+      product_name = array['PRODUCT_FAMILY']
+      if "SYMMETRIX" in product_name:
+        product_name = "SYMMETRIX"
+      elif "CENTERA" in product_name:
+        product_name = "CENTERA"
+      elif "CLARIION" in product_name:
+        product_name = "CLARIION"
+      elif "CELERA" in product_name:
+        product_name = "CELERA"
+      # Add to the counts
       try:
-        counts[array['PRODUCT_FAMILY']] +=1
+        counts[product_name] +=1
       except KeyError:
-        counts[array['PRODUCT_FAMILY']] = 1
+        counts[product_name] = 1
   return counts
 
 def getSRData(gdun):
