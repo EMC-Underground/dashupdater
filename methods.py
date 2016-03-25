@@ -2,7 +2,8 @@
 import sched, time
 import json
 import multiprocessing
-import request
+import requests
+import datetime
 from requests_ntlm import HttpNtlmAuth
 
 ### Load config files and declare globals ###
