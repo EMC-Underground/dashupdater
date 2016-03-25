@@ -132,7 +132,7 @@ def countSRBySev(sr_data):
     try:
       counts[sr['Sev']] +=1
     except KeyError:
-      counts[sr['Sev']] = 1      
+      counts[sr['Sev']] = 1
   return counts
 
 # Primary job function
@@ -166,9 +166,9 @@ def rotating():
 
   sr_counts = countSRBySev(sr_data)
   sr_array = []
-  sr_array.append({"SR Severity":"Quantity"})
+  sr_array.append(["SR Severity","Quantity"])
   for sr in sr_counts:
-    sr_array.append({sr:sr_counts[sr]})
+    sr_array.append([sr,sr_counts[sr]])
 
   r = requests.post('{0}:3030/widgets/api_mychart'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"slices": sr_array}))
   r = requests.post('{0}:3030/widgets/api_total_srs'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": len(sr_data['rows']), "link": sr_url}))
