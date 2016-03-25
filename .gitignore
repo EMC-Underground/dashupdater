@@ -2,3 +2,4 @@ env/
 config.json
 arrays.rb
 *.swp
+*.pyc
