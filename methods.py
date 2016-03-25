@@ -118,6 +118,14 @@ def countArrays (data):
         product_name = "CELERRA"
       elif "AVAMAR" in product_name:
         product_name = "AVAMAR"
+      elif "RECOVERPOINT" in product_name:
+        product_name = "RECOVERPOINT"
+      elif "DATADOMAIN" in product_name:
+        product_name = "DATADOMAIN"
+
+      # Clean out non-array components
+      if array['CONTRACT_SUBLINE_STATUS'] is None:
+        continue
       # Add to the counts
       try:
         counts[product_name] +=1
