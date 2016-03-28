@@ -34,23 +34,23 @@ def error_listener(event):
 
 # Function to set gdun index variable
 def set_next_index(packet):
-  #
-  # Save the current next gdun
-  #
-  prev_gdun_index.value = gdun_index.value
-  #
+
   # Grab the file
-  #
   with open('config.json') as config_file:
     config = json.load(config_file)
   gduns = config['gduns']
-  #
-  # Search for the gdun
-  #
   found = False
+
+  # See if the customer is already next
+  if gduns[gdun_index.value]['num'] == packet['gdun'] or packet['gdun'] in gduns[gdun_index.value]['name']:
+    found = True
+    return json.dumps({"Status":"OK","Found":found})
+
+  # Search for the gdun
   count = 0
   for gdun in gduns:
-    if gdun['num'] == packet['gdun']:
+    if gdun['num'] == packet['gdun'] or packet['gdun'] in gdun['name']:
+      prev_gdun_index.value = gdun_index.value
       gdun_index.value = count
       found = True
       break
@@ -222,9 +222,8 @@ def rotating():
   gdun = gdun_data['num']
   cust_name = gdun_data['name']
   cust_logo = gdun_data['image']
-  #
+
   # Use the previous index if there is one
-  #
   if prev_gdun_index.value >= 0:
     gdun_index.value = prev_gdun_index.value
     prev_gdun_index.value = -1
