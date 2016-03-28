@@ -58,6 +58,49 @@ def set_next_index(packet):
       count += 1
   return json.dumps({"Status":"OK","Found":found})
 
+def add_customer(packet):
+
+  # Grab the file
+  with open('config.json') as config_file:
+    config = json.load(config_file)
+  gduns = config['gduns']
+  added = False
+  reason = ""
+  new_customer = {"next-index":0}
+
+  # Check packet
+  try:
+    new_customer['num'] = packet['gdun']
+    try:
+      new_customer['name'] = packet['name']
+      try:
+        new_customer['image'] = packet['image']
+      except KeyError:
+        return json.dumps({"Status":"OK","Added":added,"Reason":"Image link not present"})
+    except KeyError:
+      return json.dumps({"Status":"OK","Added":added,"Reason":"Name not present"})
+  except KeyError:
+    return json.dumps({"Status":"OK","Added":added,"Reason":"Gdun not present"})
+
+  # Make sure customer doesn't exist
+  for gdun in gduns:
+    if packet['num'] == gdun['num']:
+      reason = "Customer already in list"
+      return json.dumps({"Status":"OK","Added":added,"Reason":reason})
+
+  # Added new customer
+  index = len(gduns)
+  config['gduns'][index-1]['next-index'] = index
+  config['gduns'].append(new_customer)
+
+  # write changes to file
+  with open('config.json', 'w') as config_file:
+    config_file.write(json.dumps(config))
+    added = True
+    reason = "Added to file store"
+
+  return json.dumps({"Status":"OK","Added":added,"Reason":reason})
+
 # Get single customer gdun content
 def rotating_gdun(value):
   with open('config.json') as config_file:

@@ -20,11 +20,16 @@ def hello_world():
 #
 # Packet attrs: gdun
 #
-@app.route('/dashboard/', methods=['PUT'])
+@app.route('/dashboard/', methods=['PUT','POST','DELETE'])
 def dashboards():
   if request.method == 'PUT':
-    packet = request.get_json()
-    return methods.set_next_index(packet)
+    return methods.set_next_index(request.get_json())
+  elif request.method == 'POST':
+    return methods.add_customer(request.get_json())
+  elif request.method == 'DELETE':
+    pass
+    return methods.delete_customer(request.get_json())
+
 
 # Start App
 if __name__ == '__main__':
