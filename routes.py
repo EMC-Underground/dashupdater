@@ -26,9 +26,8 @@ def dashboards():
     return methods.set_next_index(request.get_json())
   elif request.method == 'POST':
     return methods.add_customer(request.get_json())
-  elif request.method == 'DELETE':
-    pass
-    return methods.delete_customer(request.get_json())
+#  elif request.method == 'DELETE':
+#    return methods.delete_customer(request.get_json())
 
 
 # Start App
