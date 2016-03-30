@@ -21,6 +21,7 @@ auth_token = config['auth_token']
 
 gdun_index = multiprocessing.Value('i', 0)
 prev_gdun_index = multiprocessing.Value('i', -1)
+job_id = multiprocessing.Value('i', 0)
 
 ### Methods ###
 

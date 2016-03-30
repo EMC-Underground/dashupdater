@@ -4,6 +4,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler import events
 import os
 import methods
+import multiprocessing
 
 # Globals
 app = Flask(__name__)
@@ -32,7 +33,8 @@ def dashboards():
 
 # Start App
 if __name__ == '__main__':
-  scheduler.add_job(methods.rotating, 'interval', seconds=300)
+  job = scheduler.add_job(methods.rotating, 'interval', seconds=300)
+  methods.job_id.value = job.id
   scheduler.add_listener(methods.error_listener, events.EVENT_JOB_EXECUTED | events.EVENT_JOB_ERROR)
   scheduler.start()
 
