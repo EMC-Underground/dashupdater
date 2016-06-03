@@ -70,7 +70,7 @@ def getArrayData(gdun):
   installsBucket = s3.Bucket('pacnwinstalls')
   installsObject = installsBucket.Object('{0}.json'.format(gdun)).get()
   array_data = installsObject['Body'].read()
-  return array_data["rows"]
+  return array_data['rows']
 
 def get_expiring_data(array_data):
   data = array_data
