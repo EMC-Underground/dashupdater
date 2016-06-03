@@ -69,8 +69,7 @@ def getArrayData(gdun):
   s3 = boto3.resource('s3',use_ssl=False,endpoint_url=ecs_url,aws_access_key_id=ecs_user_id,aws_secret_access_key=ecs_user_access_key,config=Config(s3={'addressing_style':'path'}))
   installsBucket = s3.Bucket('pacnwinstalls')
   installsObject = installsBucket.Object('{0}.json'.format(gdun)).get()
-  array_data = {}
-  array_data = installsObject['Body'].read()
+  array_data = json.loads(installsObject['Body'].read())
   return array_data['rows']
 
 def get_expiring_data(array_data):
@@ -194,7 +193,7 @@ def getSRData(gdun):
   s3 = boto3.resource('s3',use_ssl=False,endpoint_url=ecs_url,aws_access_key_id=ecs_user_id,aws_secret_access_key=ecs_user_access_key,config=Config(s3={'addressing_style':'path'}))
   srsBucket = s3.Bucket('pacnwsrs')
   srsObject = installsBucket.Object('{0}.json'.format(gdun)).get()
-  sr_data = srsObject['Body'].read()
+  sr_data = json.loads(srsObject['Body'].read())
   return sr_data
 
 def sev1_data(sr_data):
