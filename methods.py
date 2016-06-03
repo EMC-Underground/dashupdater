@@ -4,7 +4,9 @@ import json
 import multiprocessing
 import requests
 import datetime
-from requests_ntlm import HttpNtlmAuth
+import boto3
+
+from botocore.client import Config
 
 ### Load config files and declare globals ###
 with open('config.json') as config_file:
