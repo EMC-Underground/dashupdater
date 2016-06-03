@@ -10,14 +10,12 @@ from requests_ntlm import HttpNtlmAuth
 with open('config.json') as config_file:
   config = json.load(config_file)
 
-username = config['username']
-password = config['password']
-domain = config['domain']
-iburl1 = config['iburl']
-iburl2 = config['iburl2']
-srurl = config['srurl']
-srurl2 = config['srurl2']
 auth_token = config['auth_token']
+ecs_url = config['ecs_url']
+ecs_user_id = config['ecs_user_id']
+ecs_user_access_key = config['ecs_user_access_key']
+ecs_installs_bucket = config['ecs_installs_bucket']
+ess_srs_bucket = config['ess_srs_bucket']
 
 gdun_index = multiprocessing.Value('i', 0)
 prev_gdun_index = multiprocessing.Value('i', -1)
@@ -66,10 +64,10 @@ def rotating_gdun(value):
   return gduns[value]
 
 def getArrayData(gdun):
-  url = iburl1+str(gdun)+iburl2
-  r = requests.get(url,auth=HttpNtlmAuth('{0}\\{1}'.format(domain,username),password))
-  if r.status_code == 200:
-    array_data = r.json()
+  s3 = boto3.resource('s3',use_ssl=False,endpoint_url=ecs_url,aws_access_key_id=ecs_user_id,aws_secret_access_key=ecs_user_access_key,config=Config(s3={'addressing_style':'path'}))
+  installsBucket = s3.Bucket('pacnwinstalls')
+  installsObject = installsBucket.Object('{0}.json'.format(gdun)).get()
+  array_data = installsObject['Body'].read()
   return array_data["rows"]
 
 def get_expiring_data(array_data):
@@ -190,10 +188,10 @@ def countArrays (data):
   return counts
 
 def getSRData(gdun):
-  url = srurl + str(gdun) + srurl2
-  r = requests.get(url,auth=HttpNtlmAuth('{0}\\{1}'.format(domain,username),password))
-  if r.status_code == 200:
-    sr_data = r.json()
+  s3 = boto3.resource('s3',use_ssl=False,endpoint_url=ecs_url,aws_access_key_id=ecs_user_id,aws_secret_access_key=ecs_user_access_key,config=Config(s3={'addressing_style':'path'}))
+  srsBucket = s3.Bucket('pacnwsrs')
+  srsObject = installsBucket.Object('{0}.json'.format(gdun)).get()
+  sr_data = srsObject['Body'].read()
   return sr_data
 
 def sev1_data(sr_data):
