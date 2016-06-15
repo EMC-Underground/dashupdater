@@ -251,15 +251,14 @@ def rotating():
 
   sr_array = []
   sr_array.append(["SR Severity","Quantity"])
+  sr_counts = {}
+  sev1_hash = []
 
-  if not sr_data['rows']:
-    sr_counts = {}
-    sev1_hash = []
-  else:
-    sr_counts = countSRBySev(sr_data)
-    sev1_hash = sev1_data(sr_data)
-    for sr in sr_counts:
-      sr_array.append([sr,sr_counts[sr]])
+  # if sr_data['rows']:
+  sr_counts = countSRBySev(sr_data)
+  sev1_hash = sev1_data(sr_data)
+  for sr in sr_counts:
+    sr_array.append([sr,sr_counts[sr]])
 
   r = requests.post('{0}/widgets/api_mychart'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"slices": sr_array}))
   r = requests.post('{0}/widgets/api_total_srs'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": len(sr_data['rows']), "link": sr_url}))
