@@ -201,7 +201,7 @@ def sev1_data(sr_data):
   sev1_data = []
   sev1_data.append({ "col1":"SR Num. ", "col2": "Age", "col3": "Family   ", "col4": "Site Name" })
   for sr in data:
-    if sr['Sev'] == 'S1':
+    if sr['SEV'] == 'S1':
       sev1_data.append({ "col1": sr['SR_NUMBER'] , "col2": int(round(float(sr['Age']))), "col3": sr['Family'] , "col4": sr['CS Customer Name'] })
   return sev1_data
 
@@ -210,9 +210,9 @@ def countSRBySev(sr_data):
   counts = {}
   for sr in data:
     try:
-      counts[sr['Sev']] +=1
+      counts[sr['SEV']] +=1
     except KeyError:
-      counts[sr['Sev']] = 1
+      counts[sr['SEV']] = 1
   return counts
 
 # Primary job function
