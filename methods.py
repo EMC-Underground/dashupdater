@@ -202,7 +202,7 @@ def sev1_data(sr_data):
   sev1_data.append({ "col1":"SR Num. ", "col2": "Age", "col3": "Family   ", "col4": "Site Name" })
   for sr in data:
     if sr['SEV'] == 'S1':
-      sev1_data.append({ "col1": sr['SR'] , "col2": int(round(float(sr['Age']))), "col3": sr['Family'] , "col4": sr['CS Customer Name'] })
+      sev1_data.append({ "col1": sr['SR'] , "col2": int(round(float(sr['SR_AGE_DAYS']))), "col3": sr['PRODUCT_FAMILY'] , "col4": sr['PARTY_NUMBER'] })
   return sev1_data
 
 def countSRBySev(sr_data):
