@@ -241,7 +241,6 @@ def rotating():
   expiring_counts = countArrays(expiring_data)
   sr_data = getSRData(gdun)
   array_counts = countArrays(array_data)
-  sev1_hash = sev1_data(sr_data)
   array_hash = []
   for array in array_counts:
     array_hash.append({ "label": array, "value": array_counts[array], "link": installs_url })
@@ -250,11 +249,17 @@ def rotating():
   for array in expiring_counts:
     expiring_hash.append( { "label": array, "value": expiring_counts[array] })
 
-  sr_counts = countSRBySev(sr_data)
   sr_array = []
   sr_array.append(["SR Severity","Quantity"])
-  for sr in sr_counts:
-    sr_array.append([sr,sr_counts[sr]])
+
+  if not sr_data['rows']:
+    sr_counts = {}
+    sev1_hash = []
+  else:
+    sr_counts = countSRBySev(sr_data)
+    sev1_hash = sev1_data(sr_data)
+    for sr in sr_counts:
+      sr_array.append([sr,sr_counts[sr]])
 
   r = requests.post('{0}/widgets/api_mychart'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"slices": sr_array}))
   r = requests.post('{0}/widgets/api_total_srs'.format(config['dash_url']), data = json.dumps({"auth_token": auth_token,"value": len(sr_data['rows']), "link": sr_url}))
